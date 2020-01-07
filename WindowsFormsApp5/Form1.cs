@@ -94,9 +94,25 @@ namespace WindowsFormsApp5
             exApp.Quit();
             int kolvoStudGrup;
             int kolStud = tmp[0].Count;
-           int kolvoGrup = Convert.ToInt32(Convert.ToInt32(textBox1.Text));
+            int kolvoGrup = Convert.ToInt32(Convert.ToInt32(textBox1.Text));
             kolvoStudGrup = kolStud / kolvoGrup;
-            int x=0, y=0;
+            int x = 0, y = 0;
+            List<Students> students = new List<Students>();
+            for (int i = 0; i < tmp[0].Count; i++)
+            {
+                Students student = new Students();
+                string[] fio = tmp[0][i].Split(' ');
+                if (fio.Length > 0)
+                    student.textBoxFamaly.Text = fio[0];
+                if (fio.Length > 1)
+                    student.textBoxName.Text = fio[1];
+                if (fio.Length > 2)
+                    student.textBoxLastName.Text = fio[2];
+                students.Add(student);
+                Controls.Add(student);
+                student.label4.Text = (i+1).ToString();
+            }
+
             for (int i = 0; i < kolvoGrup; i++)
             {
                 if (i > 0)
@@ -106,29 +122,18 @@ namespace WindowsFormsApp5
                 }
                 for (int j = 0; j < kolvoStudGrup; j++)
                 {
-                Students Stud = new Students
-                {
-                    Location = new Point(15 + x, 15 + y)
-                };
-                button1.Visible = false;
-                button2.Visible = false;
-                label1.Visible = true;
-                textBox1.Visible = true;
-                string[] mas = tmp[0][i].Split(' ');
-                Stud.textBox1.Text = mas[0];
-                Stud.textBox2.Text = mas[1];
-                Stud.label4.Text = j.ToString();
-                if (mas.Length == 3)
-                    Stud.textBox3.Text = mas[2];
-                
-                Controls.Add(Stud);
+                    students[i * kolvoStudGrup + j].Location = new Point(15 + x, 15 + y);
+                    button1.Visible = false;
+                    button2.Visible = false;
+                    label1.Visible = true;
+                    textBox1.Visible = true;
                     y += 60;
+
                 }
 
-                
+
 
             }
         }
     }
 }
-           
