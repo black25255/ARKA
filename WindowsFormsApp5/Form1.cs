@@ -64,7 +64,7 @@ namespace WindowsFormsApp5
 
         private void button1_Click(object sender, EventArgs e)
         {
-
+           
 
             OpenFileDialog sfd = new OpenFileDialog();
 
@@ -100,6 +100,9 @@ namespace WindowsFormsApp5
             List<Students> students = new List<Students>();
             for (int i = 0; i < tmp[0].Count; i++)
             {
+                label1.Visible = false;
+                textBox1.Visible = false;
+                button1.Visible = false;
                 Students student = new Students();
                 string[] fio = tmp[0][i].Split(' ');
                 if (fio.Length > 0)
@@ -125,8 +128,6 @@ namespace WindowsFormsApp5
                     students[i * kolvoStudGrup + j].Location = new Point(15 + x, 15 + y);
                     button1.Visible = false;
                     button2.Visible = false;
-                    label1.Visible = true;
-                    textBox1.Visible = true;
                     y += 60;
 
                 }
@@ -134,6 +135,20 @@ namespace WindowsFormsApp5
 
 
             }
+          /// int ostKolvoStudGrup = kolStud % kolvoGrup;
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            button2.Visible = false;
+            label1.Visible = true;
+            textBox1.Visible = true;
+            button1.Visible = true;
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

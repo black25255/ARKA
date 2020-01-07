@@ -27,6 +27,9 @@ namespace WindowsFormsApp5
 
         }
 
-      
+        private void textBoxName_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }
