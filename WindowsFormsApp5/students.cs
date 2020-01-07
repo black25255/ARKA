@@ -10,14 +10,19 @@ using System.Windows.Forms;
 
 namespace WindowsFormsApp5
 {
-    public partial class students : UserControl
+    public partial class Students : UserControl
     {
-        public students()
+        public Students()
         {
             InitializeComponent();
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label4_Click(object sender, EventArgs e)
         {
 
         }

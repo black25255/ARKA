@@ -13,8 +13,11 @@ namespace WindowsFormsApp5
 {
     public partial class Form1 : Form
     {
-        
+
+
         Excel.Application exApp = new Excel.Application();
+
+
 
         public Form1()
         {
@@ -43,21 +46,6 @@ namespace WindowsFormsApp5
                     }
                     Excel.Workbook workBook = exApp.Workbooks.Open(ofd.FileName);
                     Excel.Worksheet ObjWorkSheet;
-                    List<List<string>>[] tmp = new List<List<string>>[6];
-                    for (int k = 0; k < 6; k++)
-                    {
-                        ObjWorkSheet = (Excel.Worksheet)workBook.Sheets[k + 1];
-                        tmp[k] = new List<List<string>>();
-                        var lastCell = ObjWorkSheet.Cells.SpecialCells(Excel.XlCellType.xlCellTypeLastCell);
-                        for (int i = 0; i < lastCell.Row; i++)
-                        {
-                            tmp[k].Add(new List<string>());
-                            for (int j = 0; j < lastCell.Row; j++)
-                                tmp[k][i].Add(ObjWorkSheet.Cells[j + 1, i + 1].Text.ToString());
-                        }
-                    }
-                    workBook.Close(true);
-                    exApp.Quit();
 
 
                 }
@@ -76,7 +64,6 @@ namespace WindowsFormsApp5
 
         private void button1_Click(object sender, EventArgs e)
         {
-            int i = Convert.ToInt32(((Button)(sender)).Tag);
 
 
             OpenFileDialog sfd = new OpenFileDialog();
@@ -92,42 +79,56 @@ namespace WindowsFormsApp5
             }
             Excel.Workbook workBook = exApp.Workbooks.Open(sfd.FileName);
             Excel.Worksheet ObjWorkSheet;
-            List<List<string>>[] tmp = new List<List<string>>[1];
-            for (int k = 0; k < 1; k++)
+            List<List<string>> tmp = new List<List<string>>();
+            ObjWorkSheet = (Excel.Worksheet)workBook.Sheets[1];
+            tmp = new List<List<string>>();
+            Excel.Range cells = ObjWorkSheet.Cells;
+            var lastCell = cells.SpecialCells(Excel.XlCellType.xlCellTypeLastCell);
+            for (int i = 0; i < lastCell.Column; i++)
             {
-                ObjWorkSheet = (Excel.Worksheet)workBook.Sheets[k + 1];
-                tmp[k] = new List<List<string>>();
-                var lastCell = ObjWorkSheet.Cells.SpecialCells(Excel.XlCellType.xlCellTypeLastCell);
-                for (int l = 0; l < lastCell.Column;l++)
+                tmp.Add(new List<string>());
+                for (int j = 1; j < lastCell.Row; j++)
+                    tmp[i].Add(cells[j + 1, i + 1].Text);
+            }
+            workBook.Close(true);
+            exApp.Quit();
+            int kolvoStudGrup;
+            int kolStud = tmp[0].Count;
+           int kolvoGrup = Convert.ToInt32(Convert.ToInt32(textBox1.Text));
+            kolvoStudGrup = kolStud / kolvoGrup;
+            int x=0, y=0;
+            for (int i = 0; i < kolvoGrup; i++)
+            {
+                if (i > 0)
                 {
-                    tmp[k].Add(new List<string>());
-                        
+                    x += 450;
+                    y = 0;
+                }
+                for (int j = 0; j < kolvoStudGrup; j++)
+                {
+                Students Stud = new Students
+                {
+                    Location = new Point(15 + x, 15 + y)
+                };
+                button1.Visible = false;
+                button2.Visible = false;
+                label1.Visible = true;
+                textBox1.Visible = true;
+                string[] mas = tmp[0][i].Split(' ');
+                Stud.textBox1.Text = mas[0];
+                Stud.textBox2.Text = mas[1];
+                Stud.label4.Text = j.ToString();
+                if (mas.Length == 3)
+                    Stud.textBox3.Text = mas[2];
+                
+                Controls.Add(Stud);
+                    y += 60;
                 }
 
+                
+
             }
-
-            
-
-        }
-
-        private void students1_Load(object sender, EventArgs e)
-        {
-
-        }
-
-        private void button2_Click(object sender, EventArgs e)
-        {
-            List<List<string>>[] tmp = new List<List<string>>[1];
-            students students1 = new students();
-            students1.Location = new Point(12, 60);
-            this.Controls.Add(students1);
-
-            students1.textBox1.Text = "ФИО";
-        }
-
-        private void Form1_Load_1(object sender, EventArgs e)
-        {
-
         }
     }
 }
+           
